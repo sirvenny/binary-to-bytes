@@ -1,30 +1,22 @@
-import struct
-path = input('Enter path to binary file')
+path = input('Enter path to binary file: ')
 
 # file = open(path, "rb")
-byte = 0
-i=0
-
+p=[]
+q=[]
+i=2
+bytee=0
 with open(path, "rb") as file:
-    byte = file.read(1)
-
-    print(int.from_bytes(byte, byteorder='big'))
-    while byte != "":
+    for x in range (0, 200):
         byte = file.read(1)
-        print(int.from_bytes(byte, byteorder='big'))
+        print(byte)
+        bytee = int.from_bytes(byte, byteorder='big')
 
+        if i % 2 == 0:
+            p.append(bytee)
+        else:
+            q.append(bytee)
 
-# try:
-#     byte = file.read(1)
-#     while byte != "":
-#         byte = file.read(1)
-#
-# finally:
-#     file.close()
+        i += 1
 
-# while byte != "":
-#     byte = file.read(i)
-#     print(byte)
-#     i = i + 1
-#
-# file.close()
+print("p = " + str(p))
+print("q = " + str(q))
