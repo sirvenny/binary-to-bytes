@@ -1,6 +1,11 @@
-path = input('Enter path to binary file: ')
 
-# file = open(path, "rb")
+from tkinter import Tk
+from tkinter import filedialog
+
+Tk().withdraw()
+
+path = filedialog.askopenfilename(title = "Select binary file to convert to p and q decimal arrays")
+
 p=[]
 q=[]
 i=2
