@@ -6,8 +6,8 @@ Tk().withdraw()
 
 path = filedialog.askopenfilename(title = "Select binary file to convert to p and q decimal arrays")
 
-p=[]
-q=[]
+recp=[]
+recq=[]
 i=2
 bytee=0
 with open(path, "rb") as file:
@@ -16,12 +16,21 @@ with open(path, "rb") as file:
         print(byte)
         bytee = int.from_bytes(byte, byteorder='big')
 
-        if i % 2 == 0:
-            p.append(bytee)
+        if bytee == 0:
+            pass
         else:
-            q.append(bytee)
+            if i % 2 == 0:
+                recp.append(bytee)
+            else:
+                recq.append(bytee)
 
         i += 1
 
-print("p = " + str(p))
-print("q = " + str(q))
+p = [ x / 25.6 -1 for x in recp ]
+q = [ x / 25.6 for x in recq ]
+
+print("recorded p = " + str(recp))
+print("recorded q = " + str(recq))
+
+print("adjusted p = " + str(p))
+print("adjusted q = " + str(q))
