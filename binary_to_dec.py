@@ -1,6 +1,10 @@
 
 from tkinter import Tk
 from tkinter import filedialog
+"""
+    Converts binary file to two decimal arrays, p and q, where p = every even value and q every odd value (e.g. dec=12345678, p=[1,3,5,7] q=[2,4,6,8]).
+    Also ouputs adjusted p -> padj = p / 25.6 -1  q -> qadj = q / 25.6
+"""
 
 Tk().withdraw()
 
