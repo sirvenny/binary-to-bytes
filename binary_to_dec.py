@@ -10,8 +10,6 @@ import csv
     Also ouputs adjusted p -> padj = p / 25.6 -1  q -> qadj = q / 25.6
 """
 
-
-
 #creates frame
 
 class FRM(Frame):
@@ -20,7 +18,7 @@ class FRM(Frame):
         self.pack()
 root = Tk()
 app = FRM(master=root)
-app.master.title("Binary to Dec")
+app.master.title("Binary to P/Q")
 
 frame = Frame(root)
 
@@ -37,55 +35,41 @@ def generate():
     recq=[]
     i=2
     bytee=0
+    byte=0
+    print("Number of rows: " + str(os.path.getsize(path)/2))
     with open(path, "rb") as file:
         csvfile = os.path.basename(file.name) + ".csv"
-        for x in range (0, 10000):
+        # for x in range (0, 1000):
+        while byte != b"":
             byte = file.read(1)
             # print(byte)
             bytee = int.from_bytes(byte, byteorder='big')
-
-            if bytee == 0:
-                pass
+            # print(str(i-1)+ " " + str(bytee))
+            # if bytee == 0:
+            #     pass
+            # else:
+            if i % 2 == 0:
+                recp.append(bytee)
             else:
-                if i % 2 == 0:
-                    recp.append(bytee)
-                else:
-                    recq.append(bytee)
+                recq.append(bytee)
 
             i += 1
 
     p = [ x / 25.6 -1 for x in recp ]
     q = [ x / 25.6 for x in recq ]
-    print("Length of p" + str(len(p)))
-    print("Length of q" + str(len(q)))
-    # print("recorded p = " + str(recp))
-    # print("recorded q = " + str(recq))
-    #
-    # print("adjusted p = " + str(p))
-    # print("adjusted q = " + str(q))
+    print(p)
 
-    # csvfile = "DecData.csv"
-    # csvfile = "../Data/" + csvfile
     with open(csvfile, "w") as output:
         writer = csv.writer(output, lineterminator='\n')
+        writer.writerows(zip(p, q))
+        # for i in range(int(os.path.getsize(path)/2)):
+        #     writer.writerows(zip(p, q))
 
-        for i in range(len(p)):
-            writer.writerows(zip(p, q))
-
-
-        # writer.writerow("p")
-        # for val in p:
-        #     writer.writerow([val])
-        # writer.writerow("q")
-        # for val in q:
-        #     writer.writerow([val])
+title_label = Label(frame, text="Generates P/Q data from raw")
+title_label.pack(side = TOP, padx = 30, pady = 5)
 
 generate_btn = tkinter.Button(frame, text="Generate!", command=generate)
-generate_btn.pack(side = BOTTOM, padx = 5, pady = 5)
-
-
-
-
+generate_btn.pack(side = BOTTOM, padx = 30, pady = 20)
 
 
 frame.mainloop()
